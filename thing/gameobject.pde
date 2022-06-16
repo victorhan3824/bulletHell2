@@ -19,9 +19,30 @@ abstract class GameObject {
     x += vx;
     y += vy;
   }
+  
+  void enemyShot(int n) {
+  //enemy get shot
+    int i = 0;
+    while(i < objects.size()) {
+      GameObject obj = objects.get(i); //takeout the "i"th object in the objects list
+      if (obj instanceof Bullet) { //if obj that we took out is of Bullet class
+        if (collidingWith(obj)) {
+          lives--;
+          obj.lives = 0; //removing the bullet that we shot the enemy with
+          if (lives == 0) score = score + n; //adding points
+        } 
+      }
+      i++;
+    }    
+  }
 
   void show() {
-    image(display, x, y, size, size);
+    if (this.size == 300 || this.size == 70) image(display, x, y, size*1.69, size); 
+    else image(display, x, y, size, size);
+  }
+  
+  void rectShow() {
+    image(display, x, y, size*1.69, size);    
   }
   
   boolean collidingWith(GameObject object) { //used in enemy classes

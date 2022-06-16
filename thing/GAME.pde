@@ -3,6 +3,7 @@ void game() {
   
   addObjects();
   gameEngine();
+  overheader();
   gameDebug();
   
 } //end of the drawing part ======================================================
@@ -11,8 +12,13 @@ void addObjects() { //----------------------------------------------------------
   //adding the star into the stars list
   objects.add(0, new Star());
   //adding enemies
-  if (frameCount % 100 == 0) objects.add(new Enemy1());  
-  if (frameCount % 30 == 0) objects.add(new Enemy2());    
+  int bossSpawn = 1000;
+  if (frameCount < bossSpawn || frameCount > 2*bossSpawn) {
+    if (frameCount % 70 == 0) objects.add(new Enemy1());
+    if (frameCount % 150 == 0) objects.add(new Enemy3());
+  }
+  if (frameCount % 30 == 0) objects.add(new Enemy2()); 
+  if (frameCount == bossSpawn) objects.add(new Boss());
 }
 
 void gameEngine() { //------------------------------------------------------------
@@ -38,8 +44,36 @@ void gameDebug() { //-----------------------------------------------------------
     text("Y Coordinate: " + player1.y,40,80);
     text("Lives: " + player1.lives,40,100);
     text("Time: " + hour() + ":" + minute() + ":" + second(), 40, 120);
-    text("Score: " + frameCount/10, 40, 140);
+    text("Score: " + score, 40, 140);   
   }  
+}
+
+void overheader() {
+  fill(white);
+  textSize(15);
+  //score display ================
+  text("Score: " + score, width/2,20);
+  
+  //keyboard directions
+  image(S,width*0.87,10,30,30);
+  text("Game Statistics",width*0.87+40,25);
+  image(Q,width*0.87,50,30,30);
+  text("Speed Boost",width*0.87+40,65);
+  
+  //health bar ===================
+  text("Starship",width*0.6,20);
+  //box 
+  noFill();
+  stroke(black);
+  rect(width*0.6 + 80,20,300,10);
+  text(player1.lives + " / " + fullHealth, width*0.8,40);
+  //bar
+  fill(lightGreen);
+  noStroke();
+  
+  float howMuchHealth = ((1.0*player1.lives) / fullHealth)*300;
+  rect(width*0.6 + 80,20,howMuchHealth,10);
+
 }
 //end of sub-functions ===========================================================
 

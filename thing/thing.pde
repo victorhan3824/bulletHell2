@@ -34,6 +34,7 @@ int mode;
 //class initialization
 ArrayList<GameObject> objects;
 Starship player1;
+int fullHealth;
 
 //keyboard variable
 boolean up, down, left, right, space;
@@ -42,19 +43,22 @@ boolean stat;
 //misc variables
 PFont AVA;
 PImage spaceship, myLaser;
-PImage enemy1, enemyBullet, enemy2;
-int statCounter;
+PImage enemy1, enemyBullet, enemy2, enemy3, enemy3b, boss;
+int statCounter, score;
+PImage Q, S;
 
 //intro gif stuff
 PImage[] introGif;
 int frameNum;
+//explosion
+PImage[] explosion;
 
 //setup, draw, mouse ===================================================
 void setup() {
   fullScreen();  
   mode = INTRO; 
   textAlign(CORNER, CENTER);
-  rectMode(CENTER);
+  fullHealth = 100;
   
   //intro gif stuff
   frameNum = 50;
@@ -66,16 +70,24 @@ void setup() {
       i++;
     }
   }
+  //explosion
+  explosion = new PImage[12];
+  for (int a=0;a<12;a++) explosion[a] = loadImage("explosion/frame_"+a+"_delay-0.1s.gif");
   
   //text, fonts, images
   AVA = createFont("AVA.ttf", 169);
+  Q = loadImage("Q.png");
+  S = loadImage("S.png");
       //player ship
   spaceship = loadImage("spaceship.png");
   myLaser = loadImage("myLaser.png");
       //Non-player entities  
   enemy1 = loadImage("enemy1.png");
   enemy2 = loadImage("enemy2.png");
+  enemy3 = loadImage("enemy3.png");
+  enemy3b = loadImage("enemy3b.png");
   enemyBullet = loadImage("enemy1Laser.png");
+  boss = loadImage("boss.png");
 
   /*this code can now be found MISC tab, under function void reset() {}
   //class initalization input

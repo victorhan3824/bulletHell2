@@ -3,9 +3,9 @@ class Starship extends GameObject{
   int cooldown, threshold;
   
   Starship() {
-    super(width/2, height*0.75, 0, 0, 40, 50000, spaceship);
+    super(width/2, height*0.75, 0, 0, 60, fullHealth, spaceship);
     //x,y,vx,vy,size,lives,display
-    threshold = 10;
+    threshold = 15;
     cooldown = threshold;
   }
   
@@ -20,7 +20,7 @@ class Starship extends GameObject{
     
     //controlling the starship ===========
     if (up)    vy = -1;
-    if (down)  vy = 1;
+    if (down)  vy = 3;
     if (left)  vx = -5;
     if (right) vx = 5;
     if (!up && !down)    vy = vy*0.9;
@@ -31,26 +31,30 @@ class Starship extends GameObject{
     if (x > width+size) x = -size/2;
     if (y < height/10) y = y + 2;
     if (y > height) y = height-2*size;
-    
-    //crash into enemy ===================
-    //this one basically kill the player if it crash into enemyship
-    
+      
     //Get shot ===========================
     int i = 0;
     while(i < objects.size()) {
       GameObject obj = objects.get(i); //takeout the "i"th object in the objects list
+      //determine whether Bullet hit us
       if (obj instanceof EnemyBullet) { //if obj that we took out is of Bullet class
         if (collidingWith(obj)) { //check if the ship collides with enemy bullets
           lives = lives-1;
           obj.lives = 0; //removing the bullet that hit us
         } 
       }
+      //determine whether we crash into something
+      if (obj instanceof Enemy1 || obj instanceof Enemy2) {
+        if (collidingWith(obj)) {
+          obj.lives = 0;
+          lives--;
+          if (obj instanceof Enemy1) lives=lives-4;
+        }
+      }
       i++;
     }
-    if (lives == 0) mode = OVER; //go die
+    if (lives <= 0 || score >= 300) mode = OVER; //now over
     //end of get shot ===================
-    
-    
   } 
 
   
