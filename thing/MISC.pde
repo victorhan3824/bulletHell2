@@ -10,6 +10,7 @@ void reset() {
   frameCount = 0;
   //misc
   statCounter = 1;
+  speedDuration = speedMax;
   score = 0;
 }
 
@@ -22,6 +23,7 @@ void keyPressed() {
   if (keyCode == RIGHT) right = true ;
   if (key == ' ') space = true;
   if (key == 's' || key == 'S') stat = true;
+  if (speedDuration >= speedMax) if (key == 'q' || key == 'Q') speed = true;
 }
 
 void keyReleased() {

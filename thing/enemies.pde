@@ -41,8 +41,10 @@ class Enemy2 extends GameObject {
 
 //enemy 3 ============================================================================
 class Enemy3 extends GameObject {
+  float ax, ay;
+  
   Enemy3() {
-    super(0, player1.y, 5, 0, 70, 3, enemy3);
+    super(0, random(0,height), 5, 0, 70, 1, enemy3);
     //x,y,vx,vy,size,lives,display
     int determiner = (int) random(0,2);
     if (determiner == 0) {
@@ -55,6 +57,7 @@ class Enemy3 extends GameObject {
       display = enemy3b;
       vx = -3;
     }
+    float ax = ay = 0;
   }
   
   void act() {
@@ -62,10 +65,12 @@ class Enemy3 extends GameObject {
     super.enemyShot(5);
     //spawn =================================================
     //chase mechanism
-    if (dist(x,y,player1.x,player1.y) > 500) {
-      if (y > player1.y) vy = vy - 1;
-      if (y < player1.y) vy = vy + 1;
-    }
+    ax = (player1.x - x) / 5000;
+    ay = (player1.y - y) / 5000;
+    
+    vx+=ax;
+    vy+=ay;
+    
     //crash into everything
     for (int a=0;a<objects.size();a++) {
       GameObject ene = objects.get(a);

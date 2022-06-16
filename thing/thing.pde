@@ -38,14 +38,14 @@ int fullHealth;
 
 //keyboard variable
 boolean up, down, left, right, space;
-boolean stat;
+boolean stat, speed;
 
 //misc variables
 PFont AVA;
 PImage spaceship, myLaser;
 PImage enemy1, enemyBullet, enemy2, enemy3, enemy3b, boss;
-int statCounter, score;
-PImage Q, S;
+int statCounter, score, speedDuration, speedMax;
+PImage Q, S, speedBoost;
 
 //intro gif stuff
 PImage[] introGif;
@@ -59,6 +59,7 @@ void setup() {
   mode = INTRO; 
   textAlign(CORNER, CENTER);
   fullHealth = 100;
+  speedMax = 10;
   
   //intro gif stuff
   frameNum = 50;
@@ -78,6 +79,7 @@ void setup() {
   AVA = createFont("AVA.ttf", 169);
   Q = loadImage("Q.png");
   S = loadImage("S.png");
+  speedBoost = loadImage("speed.png");
       //player ship
   spaceship = loadImage("spaceship.png");
   myLaser = loadImage("myLaser.png");

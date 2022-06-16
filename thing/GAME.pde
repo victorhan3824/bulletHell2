@@ -1,6 +1,14 @@
 void game() {
   background(black);
   
+  if (speed) {
+    player1.vy = -10;
+    speedDuration = speedDuration - 1;
+    image(speedBoost, (player1.x+player1.size/2)-10, player1.y+player1.size, 20, 50);
+  }
+  if (speedDuration <= 0) speed = false;
+  if (frameCount%10 == 0) speedDuration ++;
+  
   addObjects();
   gameEngine();
   overheader();
@@ -18,7 +26,7 @@ void addObjects() { //----------------------------------------------------------
     if (frameCount % 150 == 0) objects.add(new Enemy3());
   }
   if (frameCount % 30 == 0) objects.add(new Enemy2()); 
-  if (frameCount == bossSpawn) objects.add(new Boss());
+  //if (frameCount == bossSpawn) objects.add(new Boss());
 }
 
 void gameEngine() { //------------------------------------------------------------
@@ -63,8 +71,8 @@ void overheader() {
   //health bar ===================
   text("Starship",width*0.6,20);
   //box 
-  noFill();
-  stroke(black);
+  fill(lightGray);
+  stroke(white);
   rect(width*0.6 + 80,20,300,10);
   text(player1.lives + " / " + fullHealth, width*0.8,40);
   //bar
